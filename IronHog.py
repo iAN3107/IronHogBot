@@ -48,4 +48,4 @@ async def precos(self):
                     '**🛻 GUINCHO:** _$2000_')
 
 ################################################################
-bot.run('MTAyNzU5MDE0NDIxMzEzNTQ1MQ.Gk98Nx.d3cmWpwBvBqraR1kfF6zvb8h0LyO4j8UeIRXxQ')
+bot.run('TOKEN')
