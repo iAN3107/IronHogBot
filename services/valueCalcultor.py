@@ -1,24 +1,27 @@
 """
+# ( número de peças, valor de peças < limite , valor de peças > limite)
 def mult(pecas, vMin, vMax)
-    if pecas>5:
-        rMult= (5*vMin)+((pecas-5)*vMax)
+    limite=5 # até 5 peças vMin, depois vMax
+    if pecas>limite:
+        rMult= (limite*vMin)+((pecas-limite)*vMax)
     else:
         rMult= pecas*vMin
     return rMult
 """
 def calculaPecas(pecas):
     """
-    valor das peças B C D e M primeiras (<5) e ultimas (>5) de forma que possa ser alterado nem q manualmente aqui no código
+    #valor das peças B C D e M primeiras (< limite) e ultimas (>limite) de forma que possa ser alterado nem q manualmente aqui no código
     
     valorBCDM_p=100 
     valorBCDM_u=75
     
-    valor das peças A primeiras (<5) e ultimas (>5) de forma que possa ser alterado nem q manualmente aqui no código
+    #valor das peças A primeiras (<limite) e ultimas (>limite) de forma que possa ser alterado nem q manualmente aqui no código
     
     valorA_p=350 
     valorA_u=300
     
-    Nesse modelo:
+    #Nesse modelo:
+    # match identifica o tipo da peça, caso no futuro haja alteração individual só adicionar novas variaveis referentes
     match tipoPeca:
         case "A":
             valorPecas= mult(pecas,valorA_p,valorA_u)
@@ -37,6 +40,6 @@ def calculaPecas(pecas):
         valorPecas = 100 * int(pecas)
 
     maoDeObra = 400
+    valorIron = valorPecas
     valorPecas = valorPecas + maoDeObra
-    valorIron = valorPecas - maoDeObra
     return [valorPecas, maoDeObra, valorIron]
