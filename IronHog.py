@@ -2,13 +2,13 @@ import discord
 from discord.ext import commands
 
 from services.precos import retornaPrecosGeral
-from services.sqlite import resetTabelaPreco, definePreco
+from services.sqlite import resetTabelaPreco, definePreco, colunaDeItems
 from services.valueCalcultor import calculaPecas
 
 intents = discord.Intents.default()
 intents.message_content = True
 
-bot = commands.Bot(intents=intents, command_prefix='!')
+bot = commands.Bot(intents=intents, command_prefix='$')
 
 ##CALCULADORA DE PECAS
 @bot.command()
@@ -56,6 +56,7 @@ async def precos(self):
 @bot.command()
 async def reprecos(self):
     resetTabelaPreco()
+    colunaDeItems()
     await self.send('***`TABELA DE PREÇOS RESETADA!`*** \n\n' + retornaPrecosGeral())
 
 ################################################################
@@ -70,13 +71,23 @@ async def mudarpreco(self, item, preco):
 #apresenta os comandos possiveis no bot
 @bot.command()
 async def comandos(self):
-    await self.send(''
-                    "```COMANDOS```\n"
-                    "**$reparo 'n.pecas' 'tipo peça'**\n"
-                    "**$precos\n"
-                    "$reprecos\n"
-                    "$mudarpreco 'item' 'preço'**")
+    await self.send(
+                    "***COMANDOS***\n\n"
+                    "`$reparo 'n.pecas' 'tipo peça'`\n"
+                    "_Calcula e cadastra um reparo, tipos aceitos(A, B, C, D e M)._\n\n"
+                    "`$precos`\n"
+                    "_Mostra os preços das peças atuais._\n\n"
+                    "`$reprecos`\n"
+                    "_Reseta os preços da tabela de preços._\n\n"
+                    "`$mudarpreco 'item' 'preço'`\n"
+                    "_Muda os preços dos items, como Lockpick e peças._\n\n"
+                    "`$listaitems`\n"
+                    "_Lista de items que conseguem ser alteradas com o comando $mudarpreco._")
 
 ################################################################
 
-bot.run('MTAyOTA4NTg2MjUwOTY5NDk5Ng.GW40LF.UAy6Njyl4OAmd_wzvmZR-J-i7p_pZgBfb4dZZA')
+@bot.command()
+async def listaitems(self):
+    await self.send(colunaDeItems())
+
+bot.run('TOKEN')

@@ -2,6 +2,9 @@ import sqlite3
 
 con = sqlite3.connect("ironhog.db")
 cur = con.cursor()
+
+################################################################
+#RESETA A TABELA DE PREÇOS DO BOT
 def resetTabelaPreco():
     cur.execute("DROP TABLE precos")
     cur.execute("CREATE TABLE precos(pecaA, pecaB, pecaC, pecaD, pecaM, lpNormal, lpAvancada, maoDeObra, "
@@ -9,6 +12,8 @@ def resetTabelaPreco():
     cur.execute("INSERT INTO precos VALUES (300,75,75,75,75,800,3500,400,300,2000,350,100,100,100,100)")
     con.commit()
 
+#######################################
+#RETORNA OS PREÇOS DOS ITEMS NO SQL
 def retornaPrecosItems(item):
 
     if (item == 'pecaA' or item == 'pecaB' or item == 'pecaC' or item == 'pecaD'
@@ -19,6 +24,8 @@ def retornaPrecosItems(item):
         valor = res.fetchone()[0]
         return str(valor)
 
+################################################################
+#DEFINE OS PREÇOS NO SQL QUE É MOSTRADO EM PREÇOS
 def definePreco(item, preco):
     if not preco.isnumeric():
         return 'O preço precisa ser um número!'
@@ -30,3 +37,14 @@ def definePreco(item, preco):
 
         cur.execute("UPDATE precos SET " + item + " = " + preco)
         return 'O preço do item ' + item + ' foi mudado para $' + preco
+
+########################################################################
+##MOSTRA AS COLUNAS DO BANCO, AONDE PODEM SER ALTERADOS VALORES VIA COMANDO
+def colunaDeItems():
+    res = cur.execute("SELECT * from precos")
+    row = res.fetchone()
+    textoInicial = '***ITEMS QUE PODEM SER ALTERADOS***\n' \
+                   '**Lista de items que conseguem ser alteradas com o comando $mudarpreco**\n'
+    for column in res.description:
+        textoInicial = textoInicial + '\n' + column[0]
+    return str(textoInicial)
